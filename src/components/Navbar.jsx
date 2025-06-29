@@ -1,4 +1,5 @@
 import { Cloud, Search, Plus, Grid, List, Settings, User,  } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
@@ -8,7 +9,7 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <Cloud className="w-8 h-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">DocHost</h1>
+            <Link to="/" className="text-2xl font-bold text-gray-900 cursor-pointer">DocHost</Link>
           </div>
 
           <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2 w-96">
@@ -24,7 +25,7 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
         <div className="flex items-center space-x-4">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center space-x-2"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center space-x-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Upload</span>

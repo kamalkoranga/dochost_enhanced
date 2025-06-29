@@ -4,23 +4,23 @@ const Sidebar = () => {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0">
       <nav className="p-4 space-y-2">
-        <button className="flex items-center space-x-3 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg w-full text-left">
+        <button className="flex items-center space-x-3 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg w-full text-left cursor-pointer">
           <Home className="w-5 h-5" />
           <span>My Files</span>
         </button>
-        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left">
+        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
           <Clock className="w-5 h-5" />
           <span>Recent</span>
         </button>
-        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left">
+        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
           <Star className="w-5 h-5" />
           <span>Starred</span>
         </button>
-        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left">
+        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
           <Share2 className="w-5 h-5" />
           <span>Shared</span>
         </button>
-        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left">
+        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
           <Trash2 className="w-5 h-5" />
           <span>Trash</span>
         </button>

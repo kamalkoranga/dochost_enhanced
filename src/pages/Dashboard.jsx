@@ -5,6 +5,8 @@ import UploadModal from "../components/UploadModal";
 import FileCard from "../components/FileCard";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import getFileIcon from "../utils/fileIcons";
+
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState('grid');
