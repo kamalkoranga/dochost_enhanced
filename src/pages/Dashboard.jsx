@@ -7,7 +7,6 @@ import UploadModal from "../components/UploadModal";
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState('grid');
-  // const [showUploadModal, setShowUploadModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
