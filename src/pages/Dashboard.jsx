@@ -1,8 +1,9 @@
-import { Cloud, Search, Plus, Grid, List, Settings, User, Home, Clock, Star, Share2, Trash2, ChevronRight, MoreVertical } from "lucide-react";
+import {Home, Clock, Star, Share2, Trash2, ChevronRight, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { files } from "../data/files";
 import UploadModal from "../components/UploadModal";
 import FileCard from "../components/FileCard";
+import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState('grid');
@@ -11,58 +12,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <Cloud className="w-8 h-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">DocHost</h1>
-            </div>
-
-            <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-4 py-2 w-96">
-              <Search className="w-5 h-5 text-gray-400 mr-3" />
-              <input
-                type="text"
-                placeholder="Search files and folders"
-                className="bg-transparent outline-none flex-1 text-gray-700"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center space-x-2"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Upload</span>
-            </button>
-
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
-              >
-                <Grid className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
-              >
-                <List className="w-5 h-5" />
-              </button>
-            </div>
-
-            <button className="p-2 text-gray-400 hover:text-gray-600 transition">
-              <Settings className="w-5 h-5" />
-            </button>
-
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <User className="w-5 h-5 text-white" />
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar viewMode={viewMode} setViewMode={setViewMode} setIsModalOpen={setIsModalOpen} />
 
       <div className="flex">
         <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0">
@@ -121,7 +71,7 @@ const Dashboard = () => {
           {viewMode === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {files.map((file) => (
-                <FileCard file={file} />
+                <FileCard key={file.id} file={file} />
               ))}
             </div>
           ) : (
