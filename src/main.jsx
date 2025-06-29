@@ -6,11 +6,16 @@ import SignUp from './pages/SignUp.jsx'
 import NotFoundPage from './pages/NotFound.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import SignIn from './pages/SignIn.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Dashboard />
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    )
   },
   {
     path: '/signup',
