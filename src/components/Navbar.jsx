@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
 
 const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
+  const [currentUser, setCurrentUser] = useState(null);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
+  const fetchCurrentUser = async () => {
+    try {
+      const user = await authService.getCurrentUser();
+      setCurrentUser(user);
+    } catch (error) {
+      console.error("Failed to fetch current user:", error);
+    }
+  };
+
   const handleLogout = async () => {
     setShowUserDropdown(false);
     try {
@@ -85,8 +100,8 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
                 {/* Dropdown Menu */}
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-20">
                   <div className="px-4 py-2 border-b border-gray-100">
-                    <p className="text-sm font-medium text-gray-900">John Doe</p>
-                    <p className="text-xs text-gray-500">john.doe@example.com</p>
+                    <p className="text-sm font-medium text-gray-900">{currentUser.name}</p>
+                    <p className="text-xs text-gray-500">{currentUser.email}</p>
                   </div>
                   
                   <button className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
@@ -102,7 +117,7 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
                   <div className="border-t border-gray-100 mt-2 pt-2">
                     <button 
                       onClick={handleLogout}
-                      className="w-full flex items-center space-x-3 px-4 py-2 text-left text-red-600 hover:bg-red-50 transition"
+                      className="w-full flex items-center space-x-3 px-4 py-2 text-left text-red-600 hover:bg-red-50 transition cursor-pointer"
                     >
                       <LogOut className="w-4 h-4" />
                       <span className="text-sm">Sign Out</span>
