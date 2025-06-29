@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from "../appwrite/appwrite";
 
-const Navbar = ({ viewMode, setViewMode, setIsModalOpen, onLogout }) => {
+const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-
-  const handleLogout = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
     setShowUserDropdown(false);
-    if (onLogout) {
-      onLogout();
+    try {
+      await authService.logout();
+      navigate('/signin'); // or whatever your login route is
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
 
