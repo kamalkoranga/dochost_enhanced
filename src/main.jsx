@@ -7,6 +7,7 @@ import NotFoundPage from './pages/NotFound.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import SignIn from './pages/SignIn.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Upgrade from './pages/Upgrade.jsx'
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Dashboard />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: '/upgrade',
+    element: (
+      <ProtectedRoute>
+        <Upgrade />
       </ProtectedRoute>
     )
   },
