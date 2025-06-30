@@ -2,6 +2,8 @@ import { X, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import fileService from "../appwrite/files";
 
+const MAX_BYTES = 5 * 1024 * 1024; // 5 MB limit for uploads
+
 const UploadModal = ({ isOpen, onClose, setRefreshFiles }) => {
   if (!isOpen) return null;
 
@@ -35,11 +37,23 @@ const UploadModal = ({ isOpen, onClose, setRefreshFiles }) => {
   const handleUpload = async () => {
     if (!userId || files.length === 0) return;
 
+    const currentSize = await fileService.getFilesSize(userId);
+    if (currentSize === -1) {
+      alert("Failed to get current file size. Please try again.");
+      return;
+    }
+
     setUploading(true);
 
     try {
       for (let file of files) {
-        await fileService.uploadFile(file, userId);
+        // console.log(file.size, "+", currentSize, "=", currentSize + file.size);
+        if (currentSize + file.size <= MAX_BYTES) {
+          await fileService.uploadFile(file, userId);
+        } else {
+          alert("File size exceeds limit");
+          return;
+        }
       }
       // after file upload, refresh the file list
       setRefreshFiles(prev => prev + 1);
