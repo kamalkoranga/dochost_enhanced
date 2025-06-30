@@ -5,7 +5,7 @@ const FileCard = ({ file }) => {
   return (
     <div key={file.id} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition cursor-pointer group">
       <div className="flex items-center justify-between mb-3">
-        {getFileIcon(file.type)}
+        {getFileIcon(file.mimeType)}
         <div className="opacity-0 group-hover:opacity-100 transition">
           <button className="p-1 hover:bg-gray-100 rounded">
             <MoreVertical className="w-4 h-4 text-gray-400" />
