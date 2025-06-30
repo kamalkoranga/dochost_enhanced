@@ -53,6 +53,20 @@ class FileService {
       console.log("Appwrite service :: deleteFile :: error:", error);
     }
   }
+
+  async getFilesSize(userId) {
+    try {
+      const files = await this.getFiles(userId);
+      let totalSize = 0;
+      for (const file of files) {
+        totalSize += file.sizeOriginal; // Assuming 'sizeOriginal' is the property that holds the original file size
+      }
+      return totalSize;
+    } catch (error) {
+      console.log("Appwrite service :: getFilesSize :: error:", error);
+      return -1; // Return -1 to indicate an error
+    }
+  }
 }
 
 const fileService = new FileService();
