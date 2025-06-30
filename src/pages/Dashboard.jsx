@@ -1,17 +1,34 @@
 import { Star, ChevronRight, MoreVertical } from "lucide-react";
-import { useState } from "react";
-import { files } from "../data/files";
+import { useEffect, useState } from "react";
 import UploadModal from "../components/UploadModal";
 import FileCard from "../components/FileCard";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import getFileIcon from "../utils/fileIcons";
+import fileService from "../appwrite/files";
 
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [refreshFiles, setRefreshFiles] = useState(0);
 
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const user = await fileService.getCurrentUser();
+        if (!user) throw new Error("User not authenticated");
+        const userFiles = await fileService.getFiles(user.$id);
+        // Assuming userFiles is an array of file objects
+        setFiles(userFiles);
+        console.log("Fetched files:", userFiles);
+      } catch (error) {
+        console.error("Failed to fetch files:", error);
+      }
+    };
+    fetchFiles();
+  }, [refreshFiles]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -79,7 +96,7 @@ const Dashboard = () => {
         </main>
       </div>
 
-      <UploadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <UploadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} setRefreshFiles={setRefreshFiles} />
     </div>
   );
 }
