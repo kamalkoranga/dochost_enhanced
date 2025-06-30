@@ -39,7 +39,7 @@ const Dashboard = () => {
       <Navbar viewMode={viewMode} setViewMode={setViewMode} setIsModalOpen={setIsModalOpen} />
 
       <div className="flex">
-        <Sidebar />
+        <Sidebar activeTab={"files"} />
 
         <main className="flex-1 p-6">
           <div className="mb-6">
