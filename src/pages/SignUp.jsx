@@ -35,7 +35,7 @@ const SignUp = () => {
 
     try {
       const res = await authService.createAccount({ name, email, password });
-      console.log("Account created:", res);
+      // console.log("Account created:", res);
       navigate("/"); // or wherever you want to redirect
     } catch (err) {
       console.error(err);

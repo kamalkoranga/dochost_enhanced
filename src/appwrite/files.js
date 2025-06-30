@@ -34,7 +34,7 @@ class FileService {
           Permission.write(Role.user(userId))
         ]
       )
-      console.log('Uploaded:', fileUpload);
+      // console.log('Uploaded:', fileUpload);
     } catch (error) {
       console.log("Appwrite service :: uploadFile :: error:", error);
     }

@@ -22,7 +22,7 @@ const Dashboard = () => {
         const userFiles = await fileService.getFiles(user.$id);
         // Assuming userFiles is an array of file objects
         setFiles(userFiles);
-        console.log("Fetched files:", userFiles);
+        // console.log("Fetched files:", userFiles);
       } catch (error) {
         console.error("Failed to fetch files:", error);
       }
