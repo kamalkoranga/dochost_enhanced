@@ -1,17 +1,18 @@
-import { Home, Clock, Share2, Trash2, Star } from "lucide-react";
+import { Home, Clock, Share2, Trash2, Star, ArrowBigUpDash } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ activeTab }) => {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0">
       <nav className="p-4 space-y-2">
-        <button className="flex items-center space-x-3 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg w-full text-left cursor-pointer">
+        <Link to="/" className={`flex items-center space-x-3 px-3 py-2 ${activeTab === 'files' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg w-full text-left cursor-pointer`}>
           <Home className="w-5 h-5" />
           <span>My Files</span>
-        </button>
-        <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
-          <Clock className="w-5 h-5" />
-          <span>Recent</span>
-        </button>
+        </Link>
+        <Link to="/upgrade" className={`flex items-center space-x-3 px-3 py-2 ${activeTab === 'upgrade' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg transition w-full text-left cursor-pointer`}>
+          <ArrowBigUpDash className="w-5 h-5" />
+          <span>Upgrade</span>
+        </Link>
         <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
           <Star className="w-5 h-5" />
           <span>Starred</span>
