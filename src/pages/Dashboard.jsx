@@ -30,6 +30,11 @@ const Dashboard = () => {
     fetchFiles();
   }, [refreshFiles]);
 
+  const onDelete = async (file) => {
+    await fileService.deleteFile(file.$id);
+    setRefreshFiles((prev) => prev + 1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar viewMode={viewMode} setViewMode={setViewMode} setIsModalOpen={setIsModalOpen} />
@@ -56,7 +61,7 @@ const Dashboard = () => {
           {viewMode === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {files.map((file) => (
-                <FileCard key={file.$id} file={file} />
+                <FileCard key={file.$id} file={file} onDelete={onDelete} />
               ))}
             </div>
           ) : (

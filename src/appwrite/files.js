@@ -44,6 +44,15 @@ class FileService {
     const allFiles = await this.storage.listFiles(this.bucketId);
     return allFiles.files.filter(file => file.$permissions.includes(`read("user:${userId}")`));
   }
+
+  async deleteFile(fileId) {
+    try {
+      await this.storage.deleteFile(this.bucketId, fileId);
+      console.log('Deleted file:', fileId);
+    } catch (error) {
+      console.log("Appwrite service :: deleteFile :: error:", error);
+    }
+  }
 }
 
 const fileService = new FileService();
