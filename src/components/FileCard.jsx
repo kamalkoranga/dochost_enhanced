@@ -100,8 +100,8 @@ const FileCard = ({ file, onDelete, onToggleStar }) => {
       
       <div className="space-y-1">
         <h3 className="font-medium text-gray-900 text-sm truncate">{file.name}</h3>
-        <p className="text-xs text-gray-500">{file.size}</p>
-        <p className="text-xs text-gray-400">{file.modified}</p>
+        <p className="text-xs text-gray-500">{file.sizeOriginal}</p>
+        <p className="text-xs text-gray-400">{file.$updatedAt}</p>
       </div>
       
       {file.starred && (

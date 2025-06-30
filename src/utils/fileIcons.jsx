@@ -7,7 +7,11 @@ const getFileIcon = (type) => {
       return <Folder className={`${iconClass} text-blue-500`} />;
     case 'application/pdf':
       return <FileText className={`${iconClass} text-red-500`} />;
+    // case for all images/*
+    case 'image/png':
     case 'image/jpeg':
+    case 'image/gif':
+    case 'image/webp':
       return <Image className={`${iconClass} text-green-500`} />;
     case 'video/mp4':
       return <Video className={`${iconClass} text-purple-500`} />;

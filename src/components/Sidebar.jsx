@@ -30,10 +30,10 @@ const Sidebar = () => {
         <div className="bg-gray-50 rounded-lg p-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-gray-600">Storage</span>
-            <span className="text-sm font-medium text-gray-900">2.1 GB of 15 GB</span>
+            <span className="text-sm font-medium text-gray-900">2.5 MB of 5 MB</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div className="bg-blue-600 h-2 rounded-full" style={{ width: '14%' }}></div>
+            <div className="bg-blue-600 h-2 rounded-full" style={{ width: '50%' }}></div>
           </div>
         </div>
       </div>

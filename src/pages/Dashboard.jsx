@@ -22,14 +22,13 @@ const Dashboard = () => {
         const userFiles = await fileService.getFiles(user.$id);
         // Assuming userFiles is an array of file objects
         setFiles(userFiles);
-        // console.log("Fetched files:", userFiles);
       } catch (error) {
         console.error("Failed to fetch files:", error);
       }
     };
     fetchFiles();
   }, [refreshFiles]);
-
+  
   const onDelete = async (file) => {
     await fileService.deleteFile(file.$id);
     setRefreshFiles((prev) => prev + 1);
@@ -77,16 +76,16 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   {files.map((file, index) => (
-                    <tr key={file.id} className={`border-b border-gray-100 hover:bg-gray-50 transition ${index === files.length - 1 ? 'border-b-0' : ''}`}>
+                    <tr key={file.$id} className={`border-b border-gray-100 hover:bg-gray-50 transition ${index === files.length - 1 ? 'border-b-0' : ''}`}>
                       <td className="py-3 px-4">
                         <div className="flex items-center space-x-3">
-                          {getFileIcon(file.type)}
+                          {getFileIcon(file.mimeType)}
                           <span className="font-medium text-gray-900">{file.name}</span>
                           {file.starred && <Star className="w-4 h-4 text-yellow-400 fill-current" />}
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-gray-600">{file.size}</td>
-                      <td className="py-3 px-4 text-gray-600">{file.modified}</td>
+                      <td className="py-3 px-4 text-gray-600">{file.sizeOriginal}</td>
+                      <td className="py-3 px-4 text-gray-600">{file.$createdAt}</td>
                       <td className="py-3 px-4">
                         <button className="p-1 hover:bg-gray-100 rounded opacity-0 group-hover:opacity-100 transition">
                           <MoreVertical className="w-4 h-4 text-gray-400" />
