@@ -1,7 +1,7 @@
 import { MoreVertical, Star, Trash2, StarOff, Download } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import getFileIcon from "../utils/fileIcons";
-import fileService from "../appwrite/files";
+import { formatFileSize, formatDate } from "../utils/formatData";
 
 const FileCard = ({ file, onDelete, onToggleStar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -100,8 +100,8 @@ const FileCard = ({ file, onDelete, onToggleStar }) => {
       
       <div className="space-y-1">
         <h3 className="font-medium text-gray-900 text-sm truncate">{file.name}</h3>
-        <p className="text-xs text-gray-500">{file.sizeOriginal}</p>
-        <p className="text-xs text-gray-400">{file.$updatedAt}</p>
+        <p className="text-xs text-gray-500">{formatFileSize(file.sizeOriginal)}</p>
+        <p className="text-xs text-gray-400">{formatDate(file.$updatedAt)}</p>
       </div>
       
       {file.starred && (

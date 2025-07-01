@@ -4,6 +4,7 @@ import FileCard from "../components/FileCard";
 import getFileIcon from "../utils/fileIcons";
 import fileService from "../appwrite/files";
 import { useOutletContext } from "react-router-dom";
+import { formatFileSize, formatDate } from "../utils/formatData";
 
 
 const Dashboard = () => {
@@ -74,8 +75,8 @@ const Dashboard = () => {
                       {file.starred && <Star className="w-4 h-4 text-yellow-400 fill-current" />}
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-gray-600">{file.sizeOriginal}</td>
-                  <td className="py-3 px-4 text-gray-600">{file.$createdAt}</td>
+                  <td className="py-3 px-4 text-gray-600">{formatFileSize(file.sizeOriginal)}</td>
+                  <td className="py-3 px-4 text-gray-600">{formatDate(file.$createdAt)}</td>
                   <td className="py-3 px-4">
                     <button className="p-1 hover:bg-gray-100 rounded opacity-0 group-hover:opacity-100 transition">
                       <MoreVertical className="w-4 h-4 text-gray-400" />

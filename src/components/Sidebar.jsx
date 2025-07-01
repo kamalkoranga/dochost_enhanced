@@ -3,18 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import appService from "../appwrite/appwrite";
 import { useEffect, useState } from "react";
 import fileService from "../appwrite/files";
+import { bytesToMB } from "../utils/formatData";
 
 const Sidebar = ({ refreshFiles }) => {
   const location = useLocation();
 
   const [totalStorage, setTotalStorage] = useState(0);
   const [usedStorage, setUsedStorage] = useState(0);
-
-  const bytesToMB = (bytes, decimals = 2) => {
-    if (bytes === 0) return "0 MB";
-    const mb = bytes / (1024 * 1024);
-    return `${mb.toFixed(decimals)} MB`;
-  }
 
   useEffect(() => {
     const fetchUserStorage = async () => {
