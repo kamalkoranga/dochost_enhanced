@@ -8,15 +8,26 @@ import Dashboard from './pages/Dashboard.jsx'
 import SignIn from './pages/SignIn.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Upgrade from './pages/Upgrade.jsx'
+import DashboardLayout from './layouts/DashboardLayout.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <DashboardLayout />
       </ProtectedRoute>
-    )
+    ),
+    children: [
+      {
+        path: '',
+        element: <Dashboard />
+      },
+      {
+        path: 'upgrade',
+        element: <Upgrade />
+      }
+    ]
   },
   {
     path: '/upgrade',
