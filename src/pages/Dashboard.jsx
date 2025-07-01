@@ -63,7 +63,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           {/* Mobile-friendly table wrapper */}
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[600px]">
+            <table className="w-full min-w-[200px]">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
                   <th className="text-left py-3 px-4 font-medium text-gray-900">Name</th>
@@ -75,7 +75,7 @@ const Dashboard = () => {
               <tbody>
                 {files.map((file, index) => (
                   <tr key={file.$id} className={`border-b border-gray-100 hover:bg-gray-50 transition ${index === files.length - 1 ? 'border-b-0' : ''}`}>
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-4 max-w-[200px] sm:max-w-none">
                       <div className="flex items-center space-x-3">
                         {getFileIcon(file.mimeType)}
                         <div className="min-w-0 flex-1">
