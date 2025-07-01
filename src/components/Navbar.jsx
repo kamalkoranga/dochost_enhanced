@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle } from "lucide-react";
+import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle, Menu } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
 
-const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
+const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const navigate = useNavigate();
@@ -37,6 +37,14 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen }) => {
         {/* Left Section - Logo and Search */}
         <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
           <div className="flex items-center space-x-2 flex-shrink-0">
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            
             <Cloud className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
             <Link to="/" className="text-lg sm:text-2xl font-bold text-gray-900 cursor-pointer">
               <span className="hidden sm:inline">DocHost</span>

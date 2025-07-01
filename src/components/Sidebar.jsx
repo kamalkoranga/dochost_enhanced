@@ -1,11 +1,11 @@
-import { Home, Share2, Trash2, Star, Crown } from "lucide-react";
+import { Home, Share2, Trash2, Star, Crown, X, Cloud } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import appService from "../appwrite/appwrite";
 import { useEffect, useState } from "react";
 import fileService from "../appwrite/files";
 import { bytesToMB } from "../utils/formatData";
 
-const Sidebar = ({ refreshFiles }) => {
+const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
   const location = useLocation();
 
   const [totalStorage, setTotalStorage] = useState(0);
@@ -40,14 +40,51 @@ const Sidebar = ({ refreshFiles }) => {
   }, [refreshFiles]);
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 h-screen sticky top-0">
-      <nav className="p-4 space-y-2">
-        <Link to="/" className={`flex items-center space-x-3 px-3 py-2 ${location.pathname === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg w-full text-left cursor-pointer`}>
-          <Home className="w-5 h-5" />
-          <span>My Files</span>
-        </Link>
-        <Link to="/upgrade" className={`flex items-center space-x-3 px-3 py-2 ${location.pathname === '/upgrade' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg transition w-full text-left cursor-pointer`}>
-          <Crown className="w-5 h-5" />
+    <>
+      {/* Mobile Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed lg:sticky top-0 z-50 lg:z-auto
+        w-64 bg-white border-r border-gray-200 h-screen
+        transform transition-transform duration-300 ease-in-out lg:transform-none
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        {/* Mobile Close Button */}
+        <div className="lg:hidden flex justify-between p-4 border-b border-gray-200">
+            <Link to="/" className="text-lg sm:text-2xl font-bold text-gray-900 cursor-pointer flex gap-2 items-center">
+              <Cloud className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+              <span className="sm:hidden">DocHost</span>
+            </Link>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <nav className="p-4 space-y-2">
+          <Link 
+            to="/" 
+            className={`flex items-center space-x-3 px-3 py-2 ${location.pathname === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg w-full text-left cursor-pointer`}
+            onClick={() => setIsSidebarOpen(false)} // Close sidebar on mobile when link is clicked
+          >
+            <Home className="w-5 h-5" />
+            <span>My Files</span>
+          </Link>
+          <Link 
+            to="/upgrade" 
+            className={`flex items-center space-x-3 px-3 py-2 ${location.pathname === '/upgrade' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg transition w-full text-left cursor-pointer`}
+            onClick={() => setIsSidebarOpen(false)} // Close sidebar on mobile when link is clicked
+          >
+            <Crown className="w-5 h-5" />
           <span>Upgrade</span>
         </Link>
         <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
@@ -78,6 +115,7 @@ const Sidebar = ({ refreshFiles }) => {
         </Link>
       </div>
     </aside>
+    </>
   );
 }
 
