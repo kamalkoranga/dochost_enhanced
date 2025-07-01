@@ -53,9 +53,9 @@ const FileCard = ({ file, onDelete, onToggleStar, onDownload }) => {
     >
       <div className="flex items-center justify-between mb-3">
         {getFileIcon(file.mimeType)}
-        <div className={`transition relative ${isDropdownOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} ref={dropdownRef}>
+        <div className="transition relative opacity-100" ref={dropdownRef}>
           <button 
-            className="p-1 hover:bg-gray-100 rounded"
+            className="p-1 hover:bg-gray-100 rounded cursor-pointer"
             onClick={handleMoreClick}
           >
             <MoreVertical className="w-4 h-4 text-gray-400" />

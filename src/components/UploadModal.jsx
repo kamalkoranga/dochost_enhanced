@@ -105,14 +105,14 @@ const UploadModal = ({ isOpen, onClose, setRefreshFiles }) => {
           <button 
             onClick={onClose}
             disabled={uploading}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition cursor-pointer"
           >
             Cancel
           </button>
           <button 
             onClick={handleUpload}
             disabled={uploading || files.length === 0}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
           >
             {uploading ? "Uploading..." : "Upload"}
           </button>

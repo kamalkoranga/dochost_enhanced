@@ -30,9 +30,9 @@ const PricingCard = ({ plan, isActive, billingCycle, onSelectPlan }) => {
       return "w-full py-3 px-4 bg-gray-400 text-white rounded-lg font-medium cursor-not-allowed";
     }
     if (plan.featured) {
-      return "w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105";
+      return "w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 cursor-pointer";
     }
-    return "w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors";
+    return "w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer";
   };
 
   return (
