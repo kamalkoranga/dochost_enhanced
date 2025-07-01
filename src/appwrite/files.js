@@ -54,6 +54,11 @@ class FileService {
     }
   }
 
+  async downloadFile(fileId) {
+    const downloadLink = this.storage.getFileDownload(this.bucketId, fileId);
+    return downloadLink;
+  }
+
   async getFilesSize(userId) {
     try {
       const files = await this.getFiles(userId);

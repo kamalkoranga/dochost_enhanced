@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import getFileIcon from "../utils/fileIcons";
 import { formatFileSize, formatDate } from "../utils/formatData";
 
-const FileCard = ({ file, onDelete, onToggleStar }) => {
+const FileCard = ({ file, onDelete, onToggleStar, onDownload }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -41,8 +41,9 @@ const FileCard = ({ file, onDelete, onToggleStar }) => {
   const handleDownload = (e) => {
     e.stopPropagation();
     setIsDropdownOpen(false);
-    console.log("Downloading file:", file.name);
-  }
+    // console.log("Downloading file:", file);
+    onDownload?.(file);
+  };
 
   return (
     <div 

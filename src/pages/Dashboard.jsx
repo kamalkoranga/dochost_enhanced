@@ -31,6 +31,11 @@ const Dashboard = () => {
     setRefreshFiles((prev) => prev + 1);
   };
 
+  const onDownload = async (file) => {
+    const downloadLink = await fileService.downloadFile(file.$id);
+    window.open(downloadLink, '_blank');
+  };
+
   return (
     <main className="flex-1 p-6">
       <div className="mb-6">
@@ -51,7 +56,7 @@ const Dashboard = () => {
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {files.map((file) => (
-            <FileCard key={file.$id} file={file} onDelete={onDelete} />
+            <FileCard key={file.$id} file={file} onDelete={onDelete} onDownload={onDownload} />
           ))}
         </div>
       ) : (
