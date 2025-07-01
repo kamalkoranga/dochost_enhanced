@@ -1,4 +1,4 @@
-import { Home, Clock, Share2, Trash2, Star, ArrowBigUpDash } from "lucide-react";
+import { Home, Share2, Trash2, Star, Crown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import appService from "../appwrite/appwrite";
 import { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ const Sidebar = ({ refreshFiles }) => {
           <span>My Files</span>
         </Link>
         <Link to="/upgrade" className={`flex items-center space-x-3 px-3 py-2 ${location.pathname === '/upgrade' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'} rounded-lg transition w-full text-left cursor-pointer`}>
-          <ArrowBigUpDash className="w-5 h-5" />
+          <Crown className="w-5 h-5" />
           <span>Upgrade</span>
         </Link>
         <button className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition w-full text-left cursor-pointer">
