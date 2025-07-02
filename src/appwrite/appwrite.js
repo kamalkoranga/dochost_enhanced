@@ -87,9 +87,12 @@ class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("Appwrite service :: getCurrentUser :: error:", error);
+      if (error.code !== 401) {
+        console.log("Appwrite service :: getCurrentUser :: error:", error);
+      }
+      // If user is not authenticated (guests role), return null
+      return null;
     }
-    return null;
   }
 
   async logout() {

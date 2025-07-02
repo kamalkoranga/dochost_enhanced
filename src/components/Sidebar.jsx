@@ -1,9 +1,10 @@
 import { Home, Share2, Trash2, Star, Crown, X, Cloud } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import appService from "../appwrite/appwrite";
+import authService from "../appwrite/appwrite";
 import { useEffect, useState } from "react";
 import fileService from "../appwrite/files";
 import { bytesToMB } from "../utils/formatData";
+import getTotalStorage from "../utils/getTotalStorage";
 
 const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
   const location = useLocation();
@@ -14,12 +15,10 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
   useEffect(() => {
     const fetchUserStorage = async () => {
       try {
-        const user = await appService.getCurrentUser();
+        const user = await authService.getCurrentUser();
         if (user) {
-          const userDocument = await appService.getUserDocument(user.$id);
-          if (userDocument) {
-            // Update the UI with user storage information
-            setTotalStorage(userDocument.userBytes || 0);
+          const userTotalStorage = await getTotalStorage(user.$id);
+          if (userTotalStorage) {
 
             const currentSize = await fileService.getFilesSize(user.$id);
             if (currentSize === -1) {
@@ -28,7 +27,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
             }
 
             setUsedStorage(currentSize || 0);
-            setTotalStorage(userDocument.userBytes || 0);
+            setTotalStorage(userTotalStorage || 0);
             // console.log("User Document:", userDocument);
           }
         }
