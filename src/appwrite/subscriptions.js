@@ -33,6 +33,14 @@ class SubscriptionService {
   async addSubscription(userId, plan) {
     try {
       const document = await this.getDocumentByUserID(userId);
+      let userBytes = document.userBytes || 0;
+      if (plan === "free") {
+        userBytes = 5 * 1024 * 1024;
+      } else if (plan === "basic_premium") {
+        userBytes += 5 * 1024 * 1024; // Add 5MB for Basic Premium Cloud
+      } else if (plan === "premium") {
+        userBytes += 10 * 1024 * 1024; // Add 10MB for Premium Cloud Plan
+      }
 
       const response = await this.database.updateDocument(
         this.databaseId,
@@ -40,6 +48,7 @@ class SubscriptionService {
         document.$id,
         {
           plan: plan,
+          userBytes: userBytes,
         }
       );
       return response;

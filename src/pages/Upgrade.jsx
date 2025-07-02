@@ -19,11 +19,33 @@ const Upgrade = () => {
         }
         console.log("Current User:", user);
         setCurrentUser(user);
+        fetchSubscription(user.$id);
       } catch (error) {
         console.error("Error fetching current user:", error);
       }
     };
     fetchCurrentUser();
+
+    const fetchSubscription = async (userId) => {
+      try {
+        const subscription = await subscriptionService.getDocumentByUserID(userId);
+        if (subscription) {
+          if (subscription.plan === "free") {
+            setActivePlan("Cloud Plan");
+          } else if (subscription.plan === "basic_premium") {
+            setActivePlan("Basic Premium Cloud");
+          } else if (subscription.plan === "premium") {
+            setActivePlan("Premium Cloud Plan");
+          }
+          // console.log("Current Subscription:", subscription);
+        } else {
+          console.log("No subscription found for user.");
+        }
+      } catch (error) {
+        console.error("Error fetching subscription:", error);
+      }
+    }
+
   }, []);
 
   const plans = [

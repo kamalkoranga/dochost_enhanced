@@ -107,7 +107,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
               <span className="text-sm text-gray-600">Storage</span>
               <span className="text-sm font-medium text-gray-900">{bytesToMB(usedStorage)} of {bytesToMB(totalStorage)}</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
               <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${(usedStorage / totalStorage) * 100}%` }}></div>
             </div>
           </div>
