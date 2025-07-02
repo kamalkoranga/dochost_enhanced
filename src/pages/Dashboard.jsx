@@ -1,5 +1,5 @@
-import { Star, ChevronRight, MoreVertical } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Star, ChevronRight, MoreVertical, StarOff, Download, Trash2 } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 import FileCard from "../components/FileCard";
 import getFileIcon from "../utils/fileIcons";
 import fileService from "../appwrite/files";
@@ -10,6 +10,8 @@ import { formatFileSize, formatDate } from "../utils/formatData";
 const Dashboard = () => {
   const { refreshFiles, setRefreshFiles, viewMode } = useOutletContext();
   const [files, setFiles] = useState([]);
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, file: null });
+  const contextMenuRef = useRef(null);
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -25,6 +27,44 @@ const Dashboard = () => {
     };
     fetchFiles();
   }, [refreshFiles]);
+
+  // Close context menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target)) {
+        setContextMenu({ visible: false, x: 0, y: 0, file: null });
+      }
+    };
+
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        setContextMenu({ visible: false, x: 0, y: 0, file: null });
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, []);
+
+  const handleContextMenu = (e, file) => {
+    e.preventDefault();
+    setContextMenu({
+      visible: true,
+      x: e.clientX,
+      y: e.clientY,
+      file: file
+    });
+  };
+
+  const handleToggleStar = async (file) => {
+    // TODO: Implement star/unstar functionality
+    console.log('Toggle star for:', file.name);
+    setContextMenu({ visible: false, x: 0, y: 0, file: null });
+  };
 
   const onDelete = async (file) => {
     await fileService.deleteFile(file.$id);
@@ -74,7 +114,11 @@ const Dashboard = () => {
               </thead>
               <tbody>
                 {files.map((file, index) => (
-                  <tr key={file.$id} className={`border-b border-gray-100 hover:bg-gray-50 transition ${index === files.length - 1 ? 'border-b-0' : ''}`}>
+                  <tr 
+                    key={file.$id} 
+                    className={`select-none border-b border-gray-100 hover:bg-gray-100 hover:shadow transition cursor-pointer ${index === files.length - 1 ? 'border-b-0' : ''}`}
+                    onContextMenu={(e) => handleContextMenu(e, file)}
+                  >
                     <td className="py-3 px-4 max-w-[200px] sm:max-w-none">
                       <div className="flex items-center space-x-3">
                         {getFileIcon(file.mimeType)}
@@ -100,6 +144,55 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* Context Menu */}
+      {contextMenu.visible && (
+        <div 
+          ref={contextMenuRef}
+          className="fixed bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50 min-w-[150px]"
+          style={{
+            left: `${contextMenu.x}px`,
+            top: `${contextMenu.y}px`,
+          }}
+        >
+          <button
+            onClick={() => handleToggleStar(contextMenu.file)}
+            className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
+          >
+            {contextMenu.file?.starred ? (
+              <>
+                <StarOff className="w-4 h-4" />
+                Unstar
+              </>
+            ) : (
+              <>
+                <Star className="w-4 h-4" />
+                Star
+              </>
+            )}
+          </button>
+          <button
+            onClick={() => {
+              onDownload(contextMenu.file);
+              setContextMenu({ visible: false, x: 0, y: 0, file: null });
+            }}
+            className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
+          >
+            <Download className="w-4 h-4" />
+            Download
+          </button>
+          <button
+            onClick={() => {
+              onDelete(contextMenu.file);
+              setContextMenu({ visible: false, x: 0, y: 0, file: null });
+            }}
+            className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 cursor-pointer"
+          >
+            <Trash2 className="w-4 h-4" />
+            Delete
+          </button>
         </div>
       )}
     </main>

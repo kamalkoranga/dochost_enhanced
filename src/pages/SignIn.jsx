@@ -71,7 +71,7 @@ const SignIn = () => {
           <button
             type="submit"
             onClick={handleSignIn}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium"
+            className="cursor-pointer w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium"
           >
             Sign In
           </button>

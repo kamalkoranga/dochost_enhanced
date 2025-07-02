@@ -92,14 +92,6 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSid
             </button>
           </div>
           
-          {/* Settings - Hide on very small screens */}
-          <button 
-            className="hidden sm:block p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 transition"
-            title="Settings"
-          >
-            <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
-          
           {/* User Dropdown */}
           <div className="relative">
             <button
