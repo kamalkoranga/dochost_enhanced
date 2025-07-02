@@ -1,14 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PricingCard from '../components/PricingCard';
-import { HardDrive, Headphones, Shield, Users } from 'lucide-react';
+import authservice from '../appwrite/appwrite';
+import subscriptionService from '../appwrite/subscriptions';
 
 const Upgrade = () => {
   const [activePlan, setActivePlan] = useState('Cloud Plan');
   const [billingCycle, setBillingCycle] = useState('perMinute');
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    // access current user
+    const fetchCurrentUser = async () => {
+      try {
+        const user = await authservice.getCurrentUser();
+        if (!user) {
+          console.error("No user is currently logged in.");
+          return;
+        }
+        console.log("Current User:", user);
+        setCurrentUser(user);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+    fetchCurrentUser();
+  }, []);
 
   const plans = [
     {
       name: 'Cloud Plan',
+      shortName: 'free',
       price: 0,
       description: 'Perfect for trying out DocHost',
       features: [
@@ -23,6 +44,7 @@ const Upgrade = () => {
     },
     {
       name: 'Basic Premium Cloud',
+      shortName: 'basic_premium',
       price: billingCycle === 'perMinute' ? 2 : 90,
       description: 'Ideal for individuals and getting started',
       features: [
@@ -37,6 +59,7 @@ const Upgrade = () => {
     },
     {
       name: 'Premium Cloud Plan',
+      shortName: 'premium',
       price: billingCycle === 'perMinute' ? 4 : 180,
       description: 'For large storage needs with advanced features',
       features: [
@@ -51,11 +74,23 @@ const Upgrade = () => {
     }
   ];
 
-  const handleSelectPlan = (plan) => {
+  const handleSelectPlan = async (plan) => {
     if (plan.name !== activePlan) {
       setActivePlan(plan.name);
-      // Here you would typically integrate with your payment system
       console.log(`Selected plan: ${plan.name}`);
+
+      // and update their subscription status in user_subscriptions collection
+      try {
+        const response = await subscriptionService.addSubscription(currentUser.$id, plan.shortName);
+        console.log("Subscription updated successfully:", response);
+      } catch (error) {
+        console.error("Error updating subscription:", error);
+      }
+
+      // and increase the timeLimit for the plan for 1 minute
+      // update the sidebar with new total storage (i.e., 5MB+5MB for Basic Premium Cloud or 5MB+10MB for Premium Cloud Plan)
+      // after 1 minute it automatically updates the storage limit back to 5MB
+      // Here you would typically integrate with your payment system (future step)
     }
   };
   return (
