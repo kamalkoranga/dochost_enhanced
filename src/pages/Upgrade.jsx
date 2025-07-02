@@ -5,8 +5,7 @@ import subscriptionService from '../appwrite/subscriptions';
 import { useOutletContext } from 'react-router-dom';
 
 const Upgrade = () => {
-  const { setRefreshFiles } = useOutletContext();
-  const [activePlan, setActivePlan] = useState('Cloud Plan');
+  const { setRefreshFiles, activePlan, setActivePlan } = useOutletContext();
   const [billingCycle, setBillingCycle] = useState('perMinute');
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -19,7 +18,7 @@ const Upgrade = () => {
           console.error("No user is currently logged in.");
           return;
         }
-        console.log("Current User:", user);
+        // console.log("Current User:", user);
         setCurrentUser(user);
         fetchSubscription(user.$id);
       } catch (error) {
@@ -101,13 +100,13 @@ const Upgrade = () => {
   const handleSelectPlan = async (plan) => {
     if (plan.name !== activePlan) {
       setActivePlan(plan.name);
-      console.log(`Selected plan: ${plan.name}`);
+      // console.log(`Selected plan: ${plan.name}`);
 
       // and update their subscription status in user_subscriptions collection
       try {
         const response = await subscriptionService.addSubscription(currentUser.$id, plan.shortName);
         setRefreshFiles((prev) => prev + 1);
-        console.log("Subscription updated successfully:", response);
+        // console.log("Subscription updated successfully:", response);
       } catch (error) {
         console.error("Error updating subscription:", error);
       }

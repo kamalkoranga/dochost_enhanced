@@ -2,7 +2,7 @@ import { Check, Crown, FileText, Zap } from "lucide-react";
 
 const PricingCard = ({ plan, isActive, billingCycle, onSelectPlan }) => {
   const getIcon = () => {
-    console.log("Plan Name:", plan.name);
+    // console.log("Plan Name:", plan.name);
     switch (plan.name) {
       case 'Cloud Plan':
         return <FileText className="w-8 h-8 text-blue-600" />;
