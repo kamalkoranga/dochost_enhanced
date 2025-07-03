@@ -103,7 +103,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
       <div className="p-4 border-t border-gray-200 mt-auto">
         <Link to={"/upgrade"}>
           <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 flex-wrap">
               <span className="text-sm text-gray-600">Storage</span>
               <span className="text-sm font-medium text-gray-900">{bytesToMB(usedStorage)} of {bytesToMB(totalStorage)}</span>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PricingCard from '../components/PricingCard';
 import authservice from '../appwrite/appwrite';
 import subscriptionService from '../appwrite/subscriptions';
@@ -8,6 +8,7 @@ const Upgrade = () => {
   const { setRefreshFiles, activePlan, setActivePlan } = useOutletContext();
   const [billingCycle, setBillingCycle] = useState('perMinute');
   const [currentUser, setCurrentUser] = useState(null);
+  const activeTimeout = useRef(null);
 
   useEffect(() => {
     // access current user
@@ -98,23 +99,34 @@ const Upgrade = () => {
   ];
 
   const handleSelectPlan = async (plan) => {
-    if (plan.name !== activePlan) {
-      setActivePlan(plan.name);
-      // console.log(`Selected plan: ${plan.name}`);
+    console.log("User selected: ", plan.name);
+    setActivePlan(plan.name);
 
-      // and update their subscription status in user_subscriptions collection
-      try {
-        const response = await subscriptionService.addSubscription(currentUser.$id, plan.shortName);
-        setRefreshFiles((prev) => prev + 1);
-        // console.log("Subscription updated successfully:", response);
-      } catch (error) {
-        console.error("Error updating subscription:", error);
-      }
+    try {
+      await subscriptionService.addSubscription(currentUser.$id, plan.shortName);
+      setRefreshFiles((prev) => prev + 1); // storage updates depend on this
+    } catch (error) {
+      console.error("Error adding subscription:", error);
+    }
 
-      // and increase the timeLimit for the plan for 1 minute
-      // update the sidebar with new total storage (i.e., 5MB+5MB for Basic Premium Cloud or 5MB+10MB for Premium Cloud Plan)
-      // after 1 minute it automatically updates the storage limit back to 5MB
-      // Here you would typically integrate with your payment system (future step)
+    // Cancel any existing revert timeout
+    if (activeTimeout.current) {
+      clearTimeout(activeTimeout.current);
+      activeTimeout.current = null;
+    }
+
+    // Set new timer only for non-free plans
+    if (plan.name !== "Cloud Plan") {
+      activeTimeout.current = setTimeout(async () => {
+        console.log("Reverting back to Cloud Plan...");
+        try {
+          await subscriptionService.revertToFreePlan(currentUser.$id);
+          setActivePlan("Cloud Plan");
+          setRefreshFiles((prev) => prev + 1);
+        } catch (error) {
+          console.error("Failed to revert to free plan:", error);
+        }
+      }, 60 * 1000); // 1 minute
     }
   };
   return (
