@@ -30,7 +30,7 @@ const NotFoundPage = ({ onBackToHome }) => {
               <span>Back to Dashboard</span>
             </Link>
             
-            <Link to={'/login'}
+            <Link to={'/signin'}
               className="w-full border-2 border-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-50 transition font-medium flex items-center justify-center space-x-2 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />

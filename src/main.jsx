@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Upgrade from './pages/Upgrade.jsx'
 import DashboardLayout from './layouts/DashboardLayout.jsx'
+import { Toaster } from 'react-hot-toast'
 
 const router = createBrowserRouter([
   {
@@ -30,14 +31,6 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/upgrade',
-    element: (
-      <ProtectedRoute>
-        <Upgrade />
-      </ProtectedRoute>
-    )
-  },
-  {
     path: '/signup',
     element: <SignUp />
   },
@@ -54,5 +47,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />
+    <Toaster position='bottom-right' reverseOrder={false} />
   </StrictMode>,
 )

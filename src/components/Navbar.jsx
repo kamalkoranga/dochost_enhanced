@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle, Menu } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
+import toast from "react-hot-toast";
 
 const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -26,6 +27,7 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSid
     try {
       await authService.logout();
       navigate('/signin');
+      toast.success("Signed out successfully!");
     } catch (error) {
       console.error("Logout failed:", error);
     }

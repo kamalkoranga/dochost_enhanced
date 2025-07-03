@@ -2,6 +2,7 @@ import { X, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import fileService from "../appwrite/files";
 import getTotalStorage from "../utils/getTotalStorage";
+import toast from "react-hot-toast";
 
 const UploadModal = ({ isOpen, onClose, setRefreshFiles }) => {
   if (!isOpen) return null;
@@ -53,16 +54,21 @@ const UploadModal = ({ isOpen, onClose, setRefreshFiles }) => {
         if (currentSize + file.size <= totalStorage) {
           await fileService.uploadFile(file, userId);
         } else {
-          alert("File size exceeds limit");
+          toast.error("File size exceeds limit");
           return;
         }
       }
       // after file upload, refresh the file list
       setRefreshFiles(prev => prev + 1);
       onClose();
+      if (files.length === 1) {
+        toast.success("File uploaded successfully!");
+      } else {
+        toast.success(`${files.length} files uploaded successfully!`);
+      }
     } catch (err) {
       console.error("Upload failed", err);
-      alert("Upload failed. Try again.");
+      toast.error("Upload failed. Try again.");
     } finally {
       setUploading(false);
       setFiles([]);

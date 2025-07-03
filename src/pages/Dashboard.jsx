@@ -5,6 +5,7 @@ import getFileIcon from "../utils/fileIcons";
 import fileService from "../appwrite/files";
 import { useOutletContext } from "react-router-dom";
 import { formatFileSize, formatDate } from "../utils/formatData";
+import toast from "react-hot-toast";
 
 
 const Dashboard = () => {
@@ -69,11 +70,13 @@ const Dashboard = () => {
   const onDelete = async (file) => {
     await fileService.deleteFile(file.$id);
     setRefreshFiles((prev) => prev + 1);
+    toast.success("File deleted successfully!");
   };
 
   const onDownload = async (file) => {
     const downloadLink = await fileService.downloadFile(file.$id);
     window.open(downloadLink, '_blank');
+    toast.success("File downloaded successfully!");
   };
 
   return (

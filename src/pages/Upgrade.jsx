@@ -3,6 +3,7 @@ import PricingCard from '../components/PricingCard';
 import authservice from '../appwrite/appwrite';
 import subscriptionService from '../appwrite/subscriptions';
 import { useOutletContext } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Upgrade = () => {
   const { setRefreshFiles, activePlan, setActivePlan } = useOutletContext();
@@ -123,11 +124,13 @@ const Upgrade = () => {
           await subscriptionService.revertToFreePlan(currentUser.$id);
           setActivePlan("Cloud Plan");
           setRefreshFiles((prev) => prev + 1);
+          toast.success("Your plan has been reverted to the free Cloud Plan.", {duration: 4000});
         } catch (error) {
           console.error("Failed to revert to free plan:", error);
         }
       }, 60 * 1000); // 1 minute
     }
+    toast.success(`You have selected the ${plan.name}. Your plan will be active for 1 minute.`, {duration: 4000});
   };
   return (
     <main className="flex-1 p-6">

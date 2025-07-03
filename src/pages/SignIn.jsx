@@ -2,6 +2,7 @@ import { Cloud } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ const SignIn = () => {
     try {
       await authService.login({ email, password });
       navigate("/"); // navigate to your dashboard or main page
+      toast.success("Login successful!");
     } catch (error) {
       console.error("Login failed:", error);
       setError("Invalid credentials. Please try again.");

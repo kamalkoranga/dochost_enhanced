@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 import subscriptionService from "../appwrite/subscriptions";
 import authService from "../appwrite/appwrite";
+import toast from "react-hot-toast";
 
 
 const DashboardLayout = () => {
@@ -42,6 +43,7 @@ const DashboardLayout = () => {
         await subscriptionService.revertToFreePlan(userId);
         setRefreshFiles(prev => prev + 1); // Refresh files after reverting
         setActivePlan("Cloud Plan"); // Update active plan to free
+        toast.success("Your plan has been reverted to the free Cloud Plan.", {duration: 4000});
       }
     };
   }, []);

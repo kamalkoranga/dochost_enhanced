@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import fileService from "../appwrite/files";
 import { bytesToMB } from "../utils/formatData";
 import getTotalStorage from "../utils/getTotalStorage";
+import toast from "react-hot-toast";
 
 const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
   const location = useLocation();
 
   const [totalStorage, setTotalStorage] = useState(0);
   const [usedStorage, setUsedStorage] = useState(0);
+  const [titleMsg, setTitleMsg] = useState("");
 
   useEffect(() => {
     const fetchUserStorage = async () => {
@@ -33,6 +35,14 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
         }
       } catch (error) {
         console.log("Sidebar :: fetchUserStorage :: error:", error);
+      }
+
+      if (((usedStorage / totalStorage) * 100) > 90 && ((usedStorage / totalStorage) * 100) <= 100) {
+        setTitleMsg(`Storage (${((usedStorage / totalStorage) * 100).toFixed(2)}% full)`);
+        toast.error(`Storage is almost full (${((usedStorage / totalStorage) * 100).toFixed(2)}%). Please consider upgrading your plan.`);
+      } else {
+        setTitleMsg(`Storage (100% full)`);
+        toast.error(`Storage is full. Please consider upgrading your plan.`);
       }
     };
     fetchUserStorage();
@@ -100,7 +110,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
         </button>
       </nav>
 
-      <div className="p-4 border-t border-gray-200 mt-auto">
+      <div className="p-4 border-t border-gray-200 mt-auto" title={titleMsg}>
         <Link to={"/upgrade"}>
           <div className="bg-gray-50 rounded-lg p-3">
             <div className="flex items-center justify-between mb-2 flex-wrap">
@@ -108,7 +118,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
               <span className="text-sm font-medium text-gray-900">{bytesToMB(usedStorage)} of {bytesToMB(totalStorage)}</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-              <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${(usedStorage / totalStorage) * 100}%` }}></div>
+              <div className={((usedStorage / totalStorage) * 100) <= 90 ? `bg-blue-600 h-2 rounded-full` : 'bg-red-600 h-2 rounded-full'} style={{ width: `${(usedStorage / totalStorage) * 100}%` }}></div>
             </div>
           </div>
         </Link>
