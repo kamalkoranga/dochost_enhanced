@@ -1,7 +1,8 @@
 import { ChevronRight, User, Upload, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
+import toast from "react-hot-toast";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -18,7 +19,9 @@ const Settings = () => {
     confirmPassword: ''
   });
 
-    useEffect(() => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
         const user = await authService.getCurrentUser();
@@ -86,9 +89,15 @@ const Settings = () => {
     // Show success message
   };
 
-  const handleSignOut = () => {
-    setCurrentView('login');
+  const handleSignOut = async () => {
     setShowSignOutModal(false);
+     try {
+      await authService.logout();
+      navigate('/signin');
+      toast.success("Signed out successfully!");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const handleDeleteAccount = () => {
