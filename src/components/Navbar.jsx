@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle, Menu } from "lucide-react";
+import { Cloud, Search, Plus, Grid, List, Settings, User, ChevronDown, LogOut, UserCircle, Menu, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
 import toast from "react-hot-toast";
@@ -92,9 +92,6 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSid
             >
               <List className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
-            <Link to={"/settings"} className="p-2 text-gray-400 hover:text-gray-600 transition">
-              <Settings className="w-5 h-5" />
-            </Link>
           </div>
 
           
@@ -126,16 +123,21 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSid
                       <p className="text-xs text-gray-500 truncate">{currentUser.email}</p>
                     </div>
                   )}
-                  
-                  <button className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
+
+                  <Link to={"/settings#profile"} className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
                     <UserCircle className="w-4 h-4" />
                     <span className="text-sm">Profile Settings</span>
-                  </button>
+                  </Link>
+
+                  <Link to={"/settings#security"} className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
+                    <Lock className="w-4 h-4" />
+                    <span className="text-sm">Security Settings</span>
+                  </Link>
                   
-                  <button className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
+                  <Link to={"/settings#account"} className="w-full flex items-center space-x-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition">
                     <Settings className="w-4 h-4" />
                     <span className="text-sm">Account Settings</span>
-                  </button>
+                  </Link>
                   
                   <div className="border-t border-gray-100 mt-2 pt-2">
                     <button 

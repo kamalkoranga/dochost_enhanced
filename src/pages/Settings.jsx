@@ -41,6 +41,25 @@ const Settings = () => {
       }
     }
     fetchCurrentUser();
+
+    const hash = window.location.hash.replace('#', '');
+    if (['profile', 'security', 'account'].includes(hash)) {
+      setActiveTab(hash);
+    }
+
+    // Optional: Update active tab if user changes the hash manually
+    const handleHashChange = () => {
+      const newHash = window.location.hash.replace('#', '');
+      if (['profile', 'security', 'account'].includes(newHash)) {
+        setActiveTab(newHash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, [])
 
   const handleProfileUpdate = (field, value) => {
@@ -231,7 +250,7 @@ const Settings = () => {
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-6">
               <button
-                onClick={() => setActiveTab('profile')}
+                onClick={() => { setActiveTab('profile'); window.location.hash = 'profile'; }}
                 className={`cursor-pointer py-4 px-1 border-b-2 font-medium text-sm transition ${
                   activeTab === 'profile'
                     ? 'border-blue-600 text-blue-600'
@@ -241,7 +260,7 @@ const Settings = () => {
                 Profile
               </button>
               <button
-                onClick={() => setActiveTab('security')}
+                onClick={() => { setActiveTab('security'); window.location.hash = 'security'; }}
                 className={`cursor-pointer py-4 px-1 border-b-2 font-medium text-sm transition ${
                   activeTab === 'security'
                     ? 'border-blue-600 text-blue-600'
@@ -251,7 +270,7 @@ const Settings = () => {
                 Security
               </button>
               <button
-                onClick={() => setActiveTab('account')}
+                onClick={() => { setActiveTab('account'); window.location.hash = 'account'; }}
                 className={`cursor-pointer py-4 px-1 border-b-2 font-medium text-sm transition ${
                   activeTab === 'account'
                     ? 'border-blue-600 text-blue-600'
