@@ -18,6 +18,25 @@ const Settings = () => {
     confirmPassword: ''
   });
 
+    useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const user = await authService.getCurrentUser();
+        if (user) {
+          setProfileData({
+            name: user.name || '',
+            email: user.email || '',
+            avatar: user.avatar || null
+          });
+          // console.log("Current user:", user);
+        }
+      } catch (error) {
+        console.error("Failed to fetch current user:", error);
+      }
+    }
+    fetchCurrentUser();
+  }, [])
+
   const handleProfileUpdate = (field, value) => {
     setProfileData(prev => ({
       ...prev,
@@ -80,13 +99,13 @@ const Settings = () => {
   };
 
   const DeleteAccountModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl w-full max-w-md p-6">
+    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-[2px] flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold text-red-600">Delete Account</h3>
           <button 
             onClick={() => setShowDeleteModal(false)}
-            className="text-gray-400 hover:text-gray-600"
+            className="cursor-pointer text-gray-400 hover:text-gray-600"
           >
             <X className="w-6 h-6" />
           </button>
@@ -111,13 +130,13 @@ const Settings = () => {
         <div className="flex gap-3">
           <button 
             onClick={() => setShowDeleteModal(false)}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+            className="cursor-pointer flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
           >
             Cancel
           </button>
           <button 
             onClick={handleDeleteAccount}
-            className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            className="cursor-pointer flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
           >
             Delete Account
           </button>
@@ -127,13 +146,13 @@ const Settings = () => {
   );
 
   const SignOutModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl w-full max-w-md p-6">
+    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-[2px] flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-semibold text-gray-900">Sign Out</h3>
           <button 
             onClick={() => setShowSignOutModal(false)}
-            className="text-gray-400 hover:text-gray-600"
+            className="cursor-pointer text-gray-400 hover:text-gray-600"
           >
             <X className="w-6 h-6" />
           </button>
@@ -148,13 +167,13 @@ const Settings = () => {
         <div className="flex gap-3">
           <button 
             onClick={() => setShowSignOutModal(false)}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+            className="cursor-pointer flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
           >
             Cancel
           </button>
           <button 
             onClick={handleSignOut}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="cursor-pointer flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >
             Sign Out
           </button>
@@ -285,7 +304,7 @@ const Settings = () => {
                   <div className="pt-4">
                     <button
                       onClick={handleSaveProfile}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                      className="cursor-pointer bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
                     >
                       Save Changes
                     </button>
@@ -338,7 +357,7 @@ const Settings = () => {
 
                     <button
                       onClick={handleChangePassword}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                      className="cursor-pointer bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
                     >
                       Change Password
                     </button>
@@ -360,7 +379,7 @@ const Settings = () => {
                       </p>
                       <button
                         onClick={() => setShowSignOutModal(true)}
-                        className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+                        className="cursor-pointer bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
                       >
                         Sign Out
                       </button>
@@ -373,7 +392,7 @@ const Settings = () => {
                       </p>
                       <button
                         onClick={() => setShowDeleteModal(true)}
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                        className="cursor-pointer bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
                       >
                         Delete Account
                       </button>
