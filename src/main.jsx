@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Upgrade from './pages/Upgrade.jsx'
 import DashboardLayout from './layouts/DashboardLayout.jsx'
 import { Toaster } from 'react-hot-toast'
+import Settings from './pages/Settings.jsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
         element: <Upgrade />
       }
     ]
+  },
+  {
+    path:'/settings',
+    element: (
+      <ProtectedRoute>
+        <Settings />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/signup',

@@ -92,7 +92,11 @@ const Navbar = ({ viewMode, setViewMode, setIsModalOpen, isSidebarOpen, setIsSid
             >
               <List className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
+            <Link to={"/settings"} className="p-2 text-gray-400 hover:text-gray-600 transition">
+              <Settings className="w-5 h-5" />
+            </Link>
           </div>
+
           
           {/* User Dropdown */}
           <div className="relative">
