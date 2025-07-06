@@ -40,7 +40,7 @@ const Sidebar = ({ refreshFiles, isSidebarOpen, setIsSidebarOpen }) => {
       if (((usedStorage / totalStorage) * 100) > 90 && ((usedStorage / totalStorage) * 100) <= 100) {
         setTitleMsg(`Storage (${((usedStorage / totalStorage) * 100).toFixed(2)}% full)`);
         toast.error(`Storage is almost full (${((usedStorage / totalStorage) * 100).toFixed(2)}%). Please consider upgrading your plan.`);
-      } else {
+      } else if (((usedStorage / totalStorage) * 100) > 100) {
         setTitleMsg(`Storage (100% full)`);
         toast.error(`Storage is full. Please consider upgrading your plan.`);
       }

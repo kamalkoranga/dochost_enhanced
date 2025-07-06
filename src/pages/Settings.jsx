@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/appwrite";
 import toast from "react-hot-toast";
+import fileService from "../appwrite/files";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
   const [profileData, setProfileData] = useState({
+    id: '',
     name: '',
     email: '',
     avatar: null
@@ -27,6 +29,7 @@ const Settings = () => {
         const user = await authService.getCurrentUser();
         if (user) {
           setProfileData({
+            id: user.$id,
             name: user.name || '',
             email: user.email || '',
             avatar: user.avatar || null
@@ -100,10 +103,17 @@ const Settings = () => {
     }
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     // Here you would typically make an API call to delete account
     console.log('Deleting account');
-    setCurrentView('login');
+
+    // get all user's files
+    const userFiles = await fileService.getFiles(profileData.id);
+
+    // delete all user's files
+    await Promise.all(userFiles.map(file => fileService.deleteFile(file.$id)));
+    // logout user
+    // delete user account
     setShowDeleteModal(false);
   };
 
