@@ -4,6 +4,7 @@ class AuthService {
   client = new Client();
   databaseId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
   collectionId = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+  deleteUserFunctionEndpoint = import.meta.env.VITE_APPWRITE_DELETE_USER_FUNCTION_ENDPOINT;
   account;
   database;
 
@@ -100,6 +101,21 @@ class AuthService {
       await this.account.deleteSession('current');
     } catch (error) {
       console.log("Appwrite service :: logout :: error:", error);
+    }
+  }
+
+  async deleteAccount(userId) {
+    try {
+      await fetch(this.deleteUserFunctionEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ userId: userId })
+      });
+    } catch (error) {
+      console.log("Appwrite service :: deleteAccount :: error:", error);
+      throw new Error("Failed to delete account: " + (error.message || "An error occurred"));
     }
   }
 }
