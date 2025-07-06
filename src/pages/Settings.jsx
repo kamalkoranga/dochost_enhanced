@@ -112,8 +112,16 @@ const Settings = () => {
 
     // delete all user's files
     await Promise.all(userFiles.map(file => fileService.deleteFile(file.$id)));
-    // logout user
+  
     // delete user account
+    await authService.deleteAccount(profileData.id);
+    // console.log(profileData.id);
+
+    // navigate to sign-in page
+    navigate('/signin');
+
+    // show success message
+    toast.success("Account deleted successfully!");
     setShowDeleteModal(false);
   };
 
