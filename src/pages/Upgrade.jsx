@@ -42,7 +42,7 @@ const Upgrade = () => {
           }
           // console.log("Current Subscription:", subscription);
         } else {
-          console.log("No subscription found for user.");
+          // console.log("No subscription found for user.");
         }
       } catch (error) {
         console.error("Error fetching subscription:", error);
@@ -100,7 +100,7 @@ const Upgrade = () => {
   ];
 
   const handleSelectPlan = async (plan) => {
-    console.log("User selected: ", plan.name);
+    // console.log("User selected: ", plan.name);
     setActivePlan(plan.name);
 
     try {
@@ -119,7 +119,7 @@ const Upgrade = () => {
     // Set new timer only for non-free plans
     if (plan.name !== "Cloud Plan") {
       activeTimeout.current = setTimeout(async () => {
-        console.log("Reverting back to Cloud Plan...");
+        // console.log("Reverting back to Cloud Plan...");
         try {
           await subscriptionService.revertToFreePlan(currentUser.$id);
           setActivePlan("Cloud Plan");

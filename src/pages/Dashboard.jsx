@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   const handleToggleStar = async (file) => {
     // TODO: Implement star/unstar functionality
-    console.log('Toggle star for:', file.name);
+    // console.log('Toggle star for:', file.name);
     setContextMenu({ visible: false, x: 0, y: 0, file: null });
   };
 
@@ -99,7 +99,7 @@ const Dashboard = () => {
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {files.map((file) => (
-            <FileCard key={file.$id} file={file} onDelete={onDelete} onDownload={onDownload} />
+            <FileCard key={file.$id} file={file} onDelete={onDelete} onToggleStar={handleToggleStar} onDownload={onDownload} />
           ))}
         </div>
       ) : (

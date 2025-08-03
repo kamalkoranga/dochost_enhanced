@@ -79,13 +79,13 @@ class SubscriptionService {
         userBytes += 10 * 1024 * 1024; // Add 10MB for Premium Cloud Plan
       }
 
-      console.log("Current time:", new Date().toISOString());
-      console.log("Adding subscription:", {
-        userId,
-        plan,
-        userBytes,
-        timeLimit: timeLimit.toISOString(),
-      });
+      // console.log("Current time:", new Date().toISOString());
+      // console.log("Adding subscription:", {
+      //   userId,
+      //   plan,
+      //   userBytes,
+      //   timeLimit: timeLimit.toISOString(),
+      // });
 
       const response = await this.database.updateDocument(
         this.databaseId,

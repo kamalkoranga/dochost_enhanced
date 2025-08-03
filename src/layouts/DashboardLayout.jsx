@@ -39,7 +39,7 @@ const DashboardLayout = () => {
       const timeLimit = await subscriptionService.getTimeLimit(userId);
       const document = await subscriptionService.getDocumentByUserID(userId);
       if (timeLimit && document.plan !== "free" && timeLimit < new Date()) {
-        console.log("Subscription expired, reverting to free plan.");
+        // console.log("Subscription expired, reverting to free plan.");
         await subscriptionService.revertToFreePlan(userId);
         setRefreshFiles(prev => prev + 1); // Refresh files after reverting
         setActivePlan("Cloud Plan"); // Update active plan to free

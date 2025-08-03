@@ -92,7 +92,7 @@ const Settings = () => {
 
   const handleSaveProfile = () => {
     // Here you would typically make an API call to save the profile
-    console.log('Saving profile:', profileData);
+    // console.log('Saving profile:', profileData);
     // Show success message or handle response
   };
 
@@ -102,7 +102,7 @@ const Settings = () => {
       return;
     }
     // Here you would typically make an API call to change password
-    console.log('Changing password');
+    // console.log('Changing password');
     setPasswordData({
       currentPassword: '',
       newPassword: '',
@@ -124,7 +124,7 @@ const Settings = () => {
 
   const handleDeleteAccount = async () => {
     // Here you would typically make an API call to delete account
-    console.log('Deleting account');
+    // console.log('Deleting account');
 
     // get all user's files
     const userFiles = await fileService.getFiles(profileData.id);
